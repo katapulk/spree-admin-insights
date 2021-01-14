@@ -1,0 +1,170 @@
+es:
+  spree:
+    admin:
+      day_name: Día
+      hour_name: Hora
+      month_name: Mes
+      year: Año
+    finance_analysis: Análisis de Finanzas
+    product_analysis: Análisis de Productos
+    promotion_analysis: Análisis de Promociones
+    trending_search_analysis: Análisis de Búsquedas en Tendencias
+    user_analysis: Análisis de Usuarios
+    insights: Estadísticas
+    insight:
+      filter: Filtro
+      quick_search: Buscar
+      search_placeholder: Desde
+      stop_placeholder: Hasta
+      drop_down_heading: Seleccione un reporte
+      heading: 'Estadísticas: %{type}'
+      tab_heading: Estadísticas
+      not_found: Reporte No Encontrado.
+      product_views:
+        title: Vistas de la Página del Producto
+        description: Para obtener el número de veces que los Clientes ven la Página del Producto.
+        product_name: Producto
+        views: Total de Vistas
+        users: Usuarios(Únicos)
+        guest_sessions: Sesiones de invitados
+      cart_additions:
+        title: Añadir producto al carrito
+        additions: Adiciones
+        description: Mostrará los datos sobre cuántas veces se ha agregado el producto al carrito.
+        product_name: Producto
+        quantity_change: Adición al carrito(cantidad)
+        sku: Variante
+      cart_removals:
+        title: Producto eliminado del carrito
+        description: Mostrará los datos sobre cuántas veces se ha eliminado el producto del carrito.
+        product_name: Producto
+        quantity_change: Eliminación del carrito(cantidad)
+        removals: Removidos
+        sku: Variante
+      cart_updations:
+        title: Actualización de producto
+        description: Mostrará los datos sobre cuántas veces se ha actualizado el producto desde el carrito.
+        product_name: Producto
+        quantity_decrease: Cantidad total disminuida(del carrito)
+        quantity_increase: Cantidad total aumentada(del carrito)
+        removals: Cantidad eliminada(del carrito)
+        sku: Variante
+        updations: Solicitudes de actualización totales
+      product_views_to_cart_additions:
+        title: Producto 'Vistas' a 'Adiciones al carrito'
+        description: Relación entre el número de visitas (en la página de presentación del producto) y el número de veces que el producto se ha agregado al carrito después de la visita.
+        cart_additions: Adiciones al carrito(cantidad de producto)
+        product_name: Producto
+        views: Mostrar vistas a la página
+        cart_to_view_ratio: Relación de carrito para la vista
+      trending_search:
+        title: Tendencias de búsquedas
+        description: Puede ver / buscar la lista de palabras clave que han sido buscadas por los clientes.
+        searched_term: Término de Búsqueda
+        occurrences: Ocurrencias
+      users_not_converted:
+        title: Usuarios no convertidos
+        description: Información sobre la cantidad de usuarios registrados que no han comprado ningún producto después del registro.
+        signup_date: Registrado el
+        user_email: Correo
+      users_who_recently_purchased:
+        title: Usuarios que compraron recientemente
+        description: Número de usuarios que compran productos con frecuencia
+        last_purchase_date: Última compra
+        last_purchased_order_number: Última orden de compra
+        purchase_count: Recuento de compras
+        user_email: Correo
+      users_who_have_not_recently_purchased:
+        title: Usuarios que no han comprado nada recientemente
+        description: Número de usuarios que no han comprado nada desde un período de tiempo determinado
+        last_purchase_date: Última compra
+        last_purchased_order_number: Última orden de compra
+        user_email: Correo
+      user_pool:
+        title: Grupo de usuarios
+        description: Para ver estadísticas mensuales sobre el tipo de usuarios que visitaron el sitio
+        months_name: Meses
+        guest_users: Usuarios Únicos(No Registrados)
+        active_users: Usuarios Únicos(Registered)
+        new_sign_ups: Nuevos Usuarios
+      payment_method_transactions:
+        title: Número de transacciones del método de pago
+        description: Transacciones de diferentes métodos de pago
+        payment_method_name: Método de Pago
+        payment_amount: Cantidad de la Transacción
+        months_name: Meses
+      payment_method_transactions_conversion_rate:
+        payment_method_name: Método de Pago
+        title: Método de pago Tasa de conversión de transacción
+        description: Tasa de éxito / fracaso de diferentes métodos de pago
+        month_name: Mes
+        payment_state: Estado de pago
+        count: Cantidad
+      promotional_cost:
+        title: Costo Promocional
+        description: Dinero total invertido en una promoción en particular - El administrador verá el dinero total invertido, los ingresos totales y las ganancias de una promoción en particular.
+        promotion_code: Código
+        promotion_discount: Descuento
+        promotion_name: Promoción
+        promotion_start_date: Fecha de inicio
+        promotion_end_date: Fecha de Fin
+        usage_count: Cuenta de uso
+        months_name: Meses
+      annual_promotional_cost:
+        title: Costo Promocional Anual
+        description: Dinero total invertido en una promoción en particular - El administrador verá el dinero total invertido, los ingresos totales y las ganancias de una promoción en particular.
+        promotion_discount: Descuento
+        promotion_name: Promoción
+        usage_count: Cuenta de uso
+      sales_performance:
+        title: Rendimiento de las ventas
+        description: Información sobre ingresos, impuestos, total del envío y monto de la devolución.
+        adjustment_total: Ajuste total
+        cost_price: Precio del costo
+        months_name: Meses
+        profit_loss: Ganancia / Pérdida
+        profit_loss_percent: Ganancia / Pérdida %
+        refund_amount: Cantidad devuelta
+        revenue: Ingresos
+        sale_price: Precio de venta
+        shipping_charges: Gastos de énvio
+        tax: Impuesto
+        promotion_discount: Descuentos promocionales
+      unique_purchases:
+        title: Compras únicas
+        description: Proyectará los datos sobre cuántos usuarios únicos han comprado un producto en particular.
+        product_name: Producto
+        sku: Variante
+        sold_count: Cantidad de vendidos
+        users: Usuarios
+      best_selling_products:
+        title: Productos más vendidos
+        description: Productos más / menos vendidos según las cantidades máximas compradas.
+        product_name: Producto
+        sku: Variante
+        sold_count: Cantidad de unidades vendidas
+      product_views_to_purchases:
+        title: Producto 'Vista' a 'Compras'
+        description: Relación entre el número de visitas (en la página de presentación del producto) y el número de veces que se ha comprado el producto después de verlo.
+        product_name: Producto
+        purchases: Compras
+        views: Vistas
+        purchase_to_view_ratio: Proporción de compra por vista
+      returned_products:
+        title: Productos devueltos
+        description: Cantidad de Productos devueltos
+        product_name: Product
+        return_count: Cantidad
+        sku: Variante
+      shipping_cost:
+        title: Costo de Envío
+        name: Nombre del método de envío
+        months_name: Mes
+        shipping_charge: Costo de Envío
+        revenue: Ingresos
+        shipping_cost_percentage: Costo de Envío %
+      sales_tax:
+        title: Impuesto de Ventas
+        months_name: Mes
+        zone_name: Zona
+        sales_tax: Impuesto de Venta
