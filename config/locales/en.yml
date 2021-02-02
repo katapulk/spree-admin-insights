@@ -12,6 +12,11 @@ en:
     user_analysis: User Analysis
     insights: Insights
     insight:
+      filter: Filter
+      quick_search: Search
+      drop_down_heading: Select a report
+      search_placeholder: From
+      stop_placeholder: to
       heading: 'Insights: %{type}'
       tab_heading: Insights
       not_found: Report not found.
