@@ -28,85 +28,90 @@ module Spree
         respond_to do |format|
           format.csv do
             send_data ReportGenerationService.download(@report),
-              filename: "#{ @report_name.to_s }.csv"
+                      filename: "#{ @report_name.to_s }.csv"
           end
           format.xls do
             send_data ReportGenerationService.download(@report, { col_sep: "\t" }),
-              filename: "#{ @report_name.to_s }.xls"
+                      filename: "#{ @report_name.to_s }.xls"
           end
           format.text do
             send_data ReportGenerationService.download(@report),
-              filename: "#{ @report_name.to_s }.txt"
+                      filename: "#{ @report_name.to_s }.txt"
           end
           format.pdf do
             render pdf: "#{ @report_name.to_s }",
-              disposition: 'attachment',
-              layout: 'spree/layouts/pdf'
+                   disposition: 'attachment',
+                   layout: 'spree/layouts/pdf'
           end
         end
       end
 
       private
-        def ensure_report_exists
-          @report_name = params[:id].to_sym
-          unless ReportGenerationService.report_exists?(get_report_category, @report_name)
-            redirect_to admin_insights_path, alert: Spree.t(:not_found, scope: [:reports])
-          end
-        end
 
-        def load_reports
-          @reports = ReportGenerationService.reports_for_category(get_report_category)
+      def ensure_report_exists
+        @report_name = params[:id].to_sym
+        unless ReportGenerationService.report_exists?(get_report_category, @report_name)
+          redirect_to admin_insights_path, alert: Spree.t(:not_found, scope: [:reports])
         end
-
-        def shared_data
-          {
-            current_page:      params[:page] || 0,
-            report_category:   params[:report_category],
-            request_path:      request.path,
-            url:               request.url,
-            searched_fields:   params[:search],
-          }
+        case @report_name
+        when :best_selling_products
+          params[:sort] = { attribute: :sold_count, type: 'desc' }
         end
+      end
 
-        def get_report_category
-          params[:report_category] = if params[:report_category]
-            params[:report_category].to_sym
+      def load_reports
+        @reports = ReportGenerationService.reports_for_category(get_report_category)
+      end
+
+      def shared_data
+        {
+          current_page: params[:page] || 0,
+          report_category: params[:report_category],
+          request_path: request.path,
+          url: request.url,
+          searched_fields: params[:search],
+        }
+      end
+
+      def get_report_category
+        params[:report_category] = if params[:report_category]
+                                     params[:report_category].to_sym
+                                   else
+                                     session[:report_category].try(:to_sym) || ReportGenerationService.default_report_category
+                                   end
+        session[:report_category] = params[:report_category]
+      end
+
+      def set_reporting_period
+        if params[:search].present?
+          if params[:search][:start_date] == ""
+            # When clicking on 'x' to remove the filter
+            params[:search][:start_date] = nil
           else
-            session[:report_category].try(:to_sym) || ReportGenerationService.default_report_category
+            params[:search][:start_date] = params[:search][:start_date] || session[:search_start_date]
           end
-          session[:report_category] = params[:report_category]
-        end
-
-        def set_reporting_period
-          if params[:search].present?
-            if params[:search][:start_date] == ""
-              # When clicking on 'x' to remove the filter
-              params[:search][:start_date] = nil
-            else
-              params[:search][:start_date] = params[:search][:start_date] || session[:search_start_date]
-            end
-            if params[:search][:end_date] == ""
-              params[:search][:end_date] = nil
-            else
-              params[:search][:end_date] = params[:search][:end_date].presence || session[:search_end_date]
-            end
+          if params[:search][:end_date] == ""
+            params[:search][:end_date] = nil
           else
-            params[:search] = {}
-            params[:search][:start_date] = session[:search_start_date]
-            params[:search][:end_date] = session[:search_end_date]
+            params[:search][:end_date] = params[:search][:end_date].presence || session[:search_end_date]
           end
-          session[:search_start_date] = params[:search][:start_date]
-          session[:search_end_date] = params[:search][:end_date]
+        else
+          params[:search] = {}
+          params[:search][:start_date] = session[:search_start_date]
+          params[:search][:end_date] = session[:search_end_date]
         end
+        session[:search_start_date] = params[:search][:start_date]
+        session[:search_end_date] = params[:search][:end_date]
+      end
 
-        def set_default_pagination
-          @pagination_hash = { paginate: false }
-          unless params[:paginate] == 'false'
-            @pagination_hash[:paginate] = true
-            @pagination_hash[:records_per_page] = params[:per_page].try(:to_i) || Spree::Config[:records_per_page]
-            @pagination_hash[:offset] = params[:page].to_i * @pagination_hash[:records_per_page]
-          end
+      def set_default_pagination
+        @pagination_hash = { paginate: false }
+        unless params[:paginate] == 'false'
+          @pagination_hash[:paginate] = true
+          @pagination_hash[:records_per_page] = params[:per_page].try(:to_i) || Spree::Config[:records_per_page]
+          @pagination_hash[:offset] = params[:page].to_i * @pagination_hash[:records_per_page]
         end
+      end
     end
   end
 end

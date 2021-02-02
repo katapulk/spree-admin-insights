@@ -23,14 +23,15 @@ module Spree
 
       Spree::CartEvent
         .updated
-        .joins(variant: :product)
+        .joins(variant: { product: :translations })
         .where(created_at: reporting_period)
+        .where(spree_product_translations: { locale: I18n.locale })
         .group('product_name', 'product_slug', 'spree_variants.sku')
         .select(
-          'spree_products.name              as product_name',
+          'spree_product_translations.name              as product_name',
           'spree_products.slug              as product_slug',
           'spree_variants.sku               as sku',
-          'count(spree_products.name)       as updations',
+          'count(spree_product_translations.name)       as updations',
           "SUM(#{ quantity_increase_sql })  as quantity_increase",
           "SUM(#{ quantity_decrease_sql })  as quantity_decrease"
         )

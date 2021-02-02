@@ -23,13 +23,14 @@ module Spree
         Spree::LineItem
           .joins(:order)
           .joins(:variant)
-          .joins(:product)
+          .joins(product: :translations)
           .where(spree_orders: { state: 'complete', completed_at: reporting_period })
-          .group('variant_id', 'spree_variants.sku', 'spree_products.slug', 'spree_products.name')
+          .where(spree_product_translations: { locale: I18n.locale })
+          .group('variant_id', 'spree_variants.sku', 'spree_products.slug', 'spree_product_translations.name')
           .select(
             'spree_variants.sku   as sku',
             'spree_products.slug  as product_slug',
-            'spree_products.name  as product_name',
+            'spree_product_translations.name  as product_name',
             'SUM(quantity)        as sold_count',
             "#{ user_count_sql }  as users"
           )

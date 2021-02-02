@@ -21,7 +21,7 @@ module Spree
           .where(spree_page_events: { created_at: reporting_period })
           .group('product_name', 'product_slug', 'spree_page_events.actor_id', 'spree_page_events.session_id')
           .select(
-            'spree_products.name           as product_name',
+            'spree_product_translations.name           as product_name',
             'spree_products.slug           as product_slug',
             'COUNT(*)                      as total_views_per_session',
             'spree_page_events.session_id  as session_id',

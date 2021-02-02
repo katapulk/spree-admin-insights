@@ -20,14 +20,15 @@ module Spree
     def report_query
       Spree::CartEvent
         .removed
-        .joins(variant: :product)
+        .joins(variant: { product: :translations })
         .where(created_at: reporting_period)
+        .where(spree_product_translations: { locale: I18n.locale })
         .group('product_name', 'product_slug', 'spree_variants.sku')
         .select(
-          'spree_products.name             as product_name',
+          'spree_product_translations.name             as product_name',
           'spree_products.slug             as product_slug',
           'spree_variants.sku              as sku',
-          'count(spree_products.name)      as removals',
+          'count(spree_product_translations.name)      as removals',
           'sum(spree_cart_events.quantity) as quantity_change'
         )
     end

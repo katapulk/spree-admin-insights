@@ -21,20 +21,23 @@ module Spree
       cart_additions =
         Spree::CartEvent
           .added
-          .joins(variant: :product)
+          .joins(variant: { product: :translations })
           .where(created_at: reporting_period)
-          .group('spree_products.name', 'spree_products.slug')
+          .where(spree_product_translations: { locale: I18n.locale })
+          .group('spree_product_translations.name', 'spree_products.slug')
           .select(
-            'spree_products.name              as product_name',
+            'spree_product_translations.name              as product_name',
             'spree_products.slug              as product_slug',
             'SUM(spree_cart_events.quantity)  as cart_additions'
           )
       total_views =
         Spree::Product
           .joins(:page_view_events)
+          .joins(:translations)
+          .where(spree_product_translations: { locale: I18n.locale })
           .group(:name)
           .select(
-            'spree_products.name  as product_name',
+            'spree_product_translations.name  as product_name',
             'COUNT(*)             as views'
           )
 

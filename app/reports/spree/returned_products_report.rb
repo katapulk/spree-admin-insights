@@ -26,11 +26,12 @@ module Spree
     end
 
     private def query_with_inventory_unit_quantities
-      Spree::ReturnAuthorization.joins(return_items: { inventory_unit: { variant: :product } })
+      Spree::ReturnAuthorization.joins(return_items: { inventory_unit: { variant: { product: :translations } } })
         .where(spree_return_items: { created_at: reporting_period })
-        .group('spree_variants.id', 'spree_products.name', 'spree_products.slug', 'spree_variants.sku')
+        .where(spree_product_translations: { locale: I18n.locale })
+        .group('spree_variants.id', 'spree_product_translations.name', 'spree_products.slug', 'spree_variants.sku')
         .select(
-          'spree_products.name       as product_name',
+          'spree_product_translations.name       as product_name',
           'spree_products.slug       as product_slug',
           'spree_variants.sku        as sku',
           'sum(spree_inventory_units.quantity)  as return_count'
@@ -38,11 +39,12 @@ module Spree
     end
 
     private def query_without_inventory_unit_quantities
-      Spree::ReturnAuthorization.joins(return_items: { inventory_unit: { variant: :product } })
+      Spree::ReturnAuthorization.joins(return_items: { inventory_unit: { variant: { product: :translations } } })
         .where(spree_return_items: { created_at: reporting_period })
-        .group('spree_variants.id', 'spree_products.name', 'spree_products.slug', 'spree_variants.sku')
+        .where(spree_product_translations: { locale: I18n.locale })
+        .group('spree_variants.id', 'spree_product_translations.name', 'spree_products.slug', 'spree_variants.sku')
         .select(
-          'spree_products.name       as product_name',
+          'spree_product_translations.name       as product_name',
           'spree_products.slug       as product_slug',
           'spree_variants.sku        as sku',
           'COUNT(spree_variants.id)  as return_count'
